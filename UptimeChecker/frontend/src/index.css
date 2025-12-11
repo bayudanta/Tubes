@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f4f6; /* Abu-abu muda */
+}
+
+/* Helper sederhana biar mirip Tailwind */
+.container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+.btn { padding: 10px 15px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; }
+.btn-primary { background: #3b82f6; color: white; }
+.btn-danger { background: #ef4444; color: white; }
+.input { padding: 10px; border: 1px solid #ddd; border-radius: 5px; width: 100%; box-sizing: border-box; }
+.flex { display: flex; align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 10px; }
+.text-green { color: #10b981; font-weight: bold; }
+.text-red { color: #ef4444; font-weight: bold; }
+.text-gray { color: #6b7280; }

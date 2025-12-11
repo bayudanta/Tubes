@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # 1. Service Database (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: uptime-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: uptime_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql # Agar data tidak hilang saat restart
+
+  # 2. Service Backend (Node.js API)
+  backend:
+    build: ./backend
+    container_name: uptime-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=uptime_db
+      - DB_PORT=3306
+    depends_on:
+      - db # Backend baru jalan setelah DB siap
+
+  # 3. Service Frontend (React UI)
+  frontend:
+    build: ./frontend
+    container_name: uptime-frontend
+    restart: always
+    ports:
+      - "8080:80" # Akses di browser via localhost:8080
+    depends_on:
+      - backend
+
+# Volume untuk menyimpan data database secara permanen
+volumes:
+  mysql_data:
