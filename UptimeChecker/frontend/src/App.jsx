@@ -40,7 +40,7 @@ function App() {
   };
 
   const handleDelete = async (id) => {
-    if(!confirm("Yakin mau hapus?")) return;
+    if(!confirm("Apakah anda yakin?")) return;
     try {
       await api.delete(`/monitors/${id}`);
       fetchMonitors();
@@ -51,10 +51,10 @@ function App() {
 
   return (
     <div className="container">
-      <h1 style={{ textAlign: 'center' }}>🌐 Uptime Checker Lite</h1>
+      <h1 style={{ textAlign: 'center' }}>🌐 Website Uptime Checker 🌐</h1>
       
       <div className="card">
-        <h3>Tambah Monitor Baru</h3>
+        <h3>Tambahkan Website</h3>
         <form onSubmit={handleSubmit} className="flex gap-2">
           <input 
             className="input" 
@@ -102,7 +102,7 @@ function App() {
           </div>
         ))}
 
-        {monitors.length === 0 && <p style={{textAlign:'center'}}>Belum ada website yang dimonitor.</p>}
+        {monitors.length === 0 && <p style={{textAlign:'center'}}>Belum ada website yang ditambahkan.</p>}
       </div>
     </div>
   );

@@ -15,7 +15,6 @@ const checkSites = async () => {
 
             try {
                 await axios.get(monitor.url, { timeout: 5000 });
-                
                 status = 'UP';
                 responseTime = Date.now() - start; 
             } catch (error) {
@@ -26,6 +25,11 @@ const checkSites = async () => {
             await db.query(
                 'INSERT INTO logs (monitor_id, status, response_time) VALUES (?, ?, ?)',
                 [monitor.id, status, responseTime]
+            );
+
+            await db.query(
+                'UPDATE monitors SET status = ? WHERE id = ?',
+                [status, monitor.id]
             );
 
             console.log(`✅ Checked ${monitor.name}: ${status} (${responseTime}ms)`);
