@@ -1,7 +1,6 @@
 const mysql = require('mysql2');
 require('dotenv').config();
 
-// 1. Buat koneksi pool
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -15,12 +14,10 @@ const pool = mysql.createPool({
 
 const db = pool.promise();
 
-// 2. Fungsi inisialisasi tabel (Kita tempel ke object db)
 db.initDb = async () => {
     try {
         console.log("⏳ Sedang menyiapkan Database...");
-        
-        // Tabel Monitors
+
         await db.query(`
             CREATE TABLE IF NOT EXISTS monitors (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,7 +28,6 @@ db.initDb = async () => {
             )
         `);
 
-        // Tabel Logs
         await db.query(`
             CREATE TABLE IF NOT EXISTS logs (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -47,7 +43,7 @@ db.initDb = async () => {
     } catch (error) {
         console.error("❌ Gagal membuat tabel. Pastikan Database MySQL sudah Running.");
         console.error(error);
-        process.exit(1); // Matikan backend jika DB gagal biar restart otomatis
+        process.exit(1); 
     }
 };
 

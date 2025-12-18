@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const db = require('./src/config/db'); // Import db yang sudah kita edit
+const db = require('./src/config/db'); 
 const apiRoutes = require('./src/routes/apiRoutes');
 const startMonitoring = require('./src/jobs/uptimeChecker');
 

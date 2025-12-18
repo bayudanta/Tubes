@@ -1,15 +1,36 @@
 version: '3.8'
 
 services:
+  # 1. Service Auth (BARU) - Untuk Login/Register
+  auth-service:
+    build: ./auth-service
+    container_name: uptime-auth
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - DB_HOST=host.docker.internal
+      - DB_USER=root
+      - DB_PASSWORD=
+      - DB_NAME=uptime_db
+      - DB_PORT=3306
+      - JWT_SECRET=rahasia_super_negara  # KUNCI RAHASIA (Harus sama!)
+
+  # 2. Service Backend (LAMA) - Untuk Monitoring
   backend:
     build: ./backend
     container_name: uptime-backend
     restart: always
     ports:
       - "5000:5000"
+    # Menggabungkan env dari file .env dengan tambahan JWT_SECRET
     env_file:
-      - ./backend/.env 
+      - ./backend/.env
+    environment:
+      - JWT_SECRET=rahasia_super_negara  # Tambahan: Biar bisa cek token dari Auth Service
 
+  # 3. Service Frontend (React)
   frontend:
     build: ./frontend
     container_name: uptime-frontend
@@ -18,3 +39,4 @@ services:
       - "8080:80"
     depends_on:
       - backend
+      - auth-service
