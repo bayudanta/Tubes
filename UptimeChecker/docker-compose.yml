@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # 1. Service Auth (BARU) - Untuk Login/Register
+  # 1. AUTH SERVICE (Login/Register)
   auth-service:
     build: ./auth-service
     container_name: uptime-auth
@@ -15,22 +15,35 @@ services:
       - DB_PASSWORD=
       - DB_NAME=uptime_db
       - DB_PORT=3306
-      - JWT_SECRET=rahasia_super_negara  # KUNCI RAHASIA (Harus sama!)
+      - JWT_SECRET=rahasia_super_negara
 
-  # 2. Service Backend (LAMA) - Untuk Monitoring
+  # 2. BACKEND SERVICE (Monitoring Engine)
   backend:
     build: ./backend
     container_name: uptime-backend
     restart: always
     ports:
       - "5000:5000"
-    # Menggabungkan env dari file .env dengan tambahan JWT_SECRET
     env_file:
       - ./backend/.env
     environment:
-      - JWT_SECRET=rahasia_super_negara  # Tambahan: Biar bisa cek token dari Auth Service
+      - JWT_SECRET=rahasia_super_negara
 
-  # 3. Service Frontend (React)
+  # 3. NOTIFICATION SERVICE (Telegram Bot) - BARU!
+  notification-service:
+    build: ./notification-service
+    container_name: uptime-notification
+    restart: always
+    ports:
+      - "5002:5002"
+    environment:
+      # KUNCI RAHASIA TELEGRAM KAMU
+      - TELEGRAM_BOT_TOKEN=8516170640:AAFkkQ9J_1_hdKLIhaB0A01xzUmggRgFJgk
+      - TELEGRAM_CHAT_ID=5808414025
+    depends_on:
+      - backend
+
+  # 4. FRONTEND SERVICE (React UI)
   frontend:
     build: ./frontend
     container_name: uptime-frontend
