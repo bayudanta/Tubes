@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-const auth = require('../middleware/auth'); // Panggil satpam tadi
+const auth = require('../middleware/auth'); // Panggil satpam token
 
 // 1. GET Monitors (Hanya tampilkan punya user yang login)
 router.get('/monitors', auth, async (req, res) => {
@@ -50,7 +50,30 @@ router.delete('/monitors/:id', auth, async (req, res) => {
     }
 });
 
-// 4. GET Logs (Perlu Auth juga biar aman)
+// 4. PUT Monitor (EDIT DATA) --- [BAGIAN BARU] ---
+router.put('/monitors/:id', auth, async (req, res) => {
+    const { id } = req.params;
+    const { name, url } = req.body;
+    const userId = req.userId;
+
+    try {
+        // Cek kepemilikan
+        const [check] = await db.query('SELECT * FROM monitors WHERE id = ? AND user_id = ?', [id, userId]);
+        
+        if (check.length === 0) {
+            return res.status(404).json({ error: "Monitor tidak ditemukan atau bukan milik Anda" });
+        }
+
+        // Lakukan Update
+        await db.query('UPDATE monitors SET name = ?, url = ? WHERE id = ?', [name, url, id]);
+        
+        res.json({ message: 'Monitor updated successfully', id, name, url });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 5. GET Logs
 router.get('/monitors/:id/logs', auth, async (req, res) => {
     const { id } = req.params;
     try {

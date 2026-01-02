@@ -1,35 +1,40 @@
 version: '3.8'
 
 services:
-  # 1. AUTH SERVICE (Login/Register)
+  # 1. AUTH SERVICE
   auth-service:
     build: ./auth-service
     container_name: uptime-auth
     restart: always
     ports:
-      - "5001:5001"
+      - "${AUTH_PORT}:5001"
     environment:
       - PORT=5001
-      - DB_HOST=host.docker.internal
-      - DB_USER=root
-      - DB_PASSWORD=
-      - DB_NAME=uptime_db
-      - DB_PORT=3306
-      - JWT_SECRET=rahasia_super_negara
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+      - JWT_SECRET=${JWT_SECRET}  # <-- Mengambil dari .env
 
-  # 2. BACKEND SERVICE (Monitoring Engine)
+  # 2. BACKEND SERVICE
   backend:
     build: ./backend
     container_name: uptime-backend
     restart: always
     ports:
-      - "5000:5000"
-    env_file:
-      - ./backend/.env
+      - "${BACKEND_PORT}:5000"
+    # Kita bisa menghapus 'env_file' backend/.env karena sekarang semua di-inject dari root .env
     environment:
-      - JWT_SECRET=rahasia_super_negara
+      - PORT=5000
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+      - JWT_SECRET=${JWT_SECRET}  # <-- Mengambil dari .env
 
-  # 3. NOTIFICATION SERVICE (Telegram Bot) - BARU!
+  # 3. NOTIFICATION SERVICE
   notification-service:
     build: ./notification-service
     container_name: uptime-notification
@@ -37,13 +42,12 @@ services:
     ports:
       - "5002:5002"
     environment:
-      # KUNCI RAHASIA TELEGRAM KAMU
-      - TELEGRAM_BOT_TOKEN=8516170640:AAFkkQ9J_1_hdKLIhaB0A01xzUmggRgFJgk
-      - TELEGRAM_CHAT_ID=5808414025
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN} # <-- Mengambil dari .env (Aman)
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}     # <-- Mengambil dari .env (Aman)
     depends_on:
       - backend
 
-  # 4. FRONTEND SERVICE (React UI)
+  # 4. FRONTEND SERVICE
   frontend:
     build: ./frontend
     container_name: uptime-frontend
