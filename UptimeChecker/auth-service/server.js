@@ -9,7 +9,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Gunakan environment variable agar fleksibel
 const PORT = process.env.PORT || 5001;
 const dbConfig = {
     host: process.env.DB_HOST,
@@ -19,7 +18,6 @@ const dbConfig = {
     port: process.env.DB_PORT || 3306
 };
 
-// Fungsi inisialisasi tabel Users (Jalan otomatis saat server nyala)
 const initDb = async () => {
     try {
         const conn = await mysql.createConnection(dbConfig);
@@ -38,7 +36,7 @@ const initDb = async () => {
     }
 };
 
-// Panggil fungsi initDb
+
 initDb();
 
 // --- ROUTE REGISTER ---
@@ -56,7 +54,7 @@ app.post('/register', async (req, res) => {
             return res.status(400).json({ error: "Email sudah terdaftar" });
         }
 
-        // Hash password (enkripsi)
+        // Hash password 
         const hashedPassword = await bcrypt.hash(password, 10);
         
         // Simpan ke DB
@@ -87,7 +85,7 @@ app.post('/login', async (req, res) => {
         const validPass = await bcrypt.compare(password, user.password);
         if (!validPass) return res.status(400).json({ error: "Password salah" });
 
-        // Buat Token JWT (KTP Digital)
+        // Token JWT 
         const token = jwt.sign(
             { id: user.id, email: user.email }, 
             process.env.JWT_SECRET, 

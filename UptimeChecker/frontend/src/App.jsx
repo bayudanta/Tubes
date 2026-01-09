@@ -3,7 +3,6 @@ import axios from 'axios';
 import api from './services/api';
 import ResponseChart from './components/ResponseChart';
 
-// Import Icons (Ditambah FiEdit, FiSave, FiXCircle)
 import { 
   FiActivity, FiTrash2, FiLogOut, FiPlus, FiGlobe, FiX, 
   FiServer, FiCheckCircle, FiAlertTriangle, FiEdit, FiSave, FiXCircle 
@@ -77,7 +76,7 @@ function Dashboard({ setToken }) {
   const [selectedMonitorId, setSelectedMonitorId] = useState(null);
   const [chartLogs, setChartLogs] = useState([]);
 
-  // STATE UNTUK EDIT (BARU)
+  // STATE UNTUK EDIT 
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState('');
   const [editUrl, setEditUrl] = useState('');
@@ -89,7 +88,6 @@ function Dashboard({ setToken }) {
 
   const fetchMonitors = async () => {
     try {
-      // Jika sedang mode edit, jangan refresh otomatis agar input tidak hilang
       if (editingId) return;
 
       const response = await api.get('/monitors'); 
@@ -103,7 +101,7 @@ function Dashboard({ setToken }) {
     fetchMonitors();
     const interval = setInterval(fetchMonitors, 10000);
     return () => clearInterval(interval);
-  }, [editingId]); // Tambahkan editingId ke dependency
+  }, [editingId]); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,12 +120,11 @@ function Dashboard({ setToken }) {
     catch (error) { alert("Failed to delete"); }
   };
 
-  // --- FUNGSI EDIT (BARU) ---
   const handleEditClick = (monitor) => {
       setEditingId(monitor.id);
       setEditName(monitor.name);
       setEditUrl(monitor.url);
-      setSelectedMonitorId(null); // Tutup chart saat edit biar rapi
+      setSelectedMonitorId(null); 
   };
 
   const handleCancelEdit = () => {
@@ -140,12 +137,11 @@ function Dashboard({ setToken }) {
       try {
           await api.put(`/monitors/${id}`, { name: editName, url: editUrl });
           setEditingId(null);
-          fetchMonitors(); // Refresh data segera
+          fetchMonitors(); 
       } catch (error) {
           alert("Gagal update monitor");
       }
   };
-  // --------------------------
 
   const handleLogout = () => { localStorage.removeItem('token'); setToken(null); };
 
@@ -160,7 +156,6 @@ function Dashboard({ setToken }) {
 
   return (
     <div className="container">
-      {/* Header */}
       <div className="flex justify-between mb-4">
         <h1 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
           <FiGlobe style={{ color: '#4D274E' }} /> SYSTEM STATUS
@@ -170,7 +165,6 @@ function Dashboard({ setToken }) {
         </button>
       </div>
 
-      {/* Stats Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '30px' }}>
         <div className="card" style={{ marginBottom: 0, textAlign: 'center', borderTop: '3px solid #4D274E' }}>
             <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#DFE0EC' }}>{totalSystems}</div>
@@ -186,7 +180,6 @@ function Dashboard({ setToken }) {
         </div>
       </div>
       
-      {/* Input Monitor */}
       <div className="card">
         <h3 className="mb-4 flex gap-2"><FiPlus /> Initialize New Monitor</h3>
         <form onSubmit={handleSubmit} className="flex gap-2">
@@ -198,7 +191,6 @@ function Dashboard({ setToken }) {
         </form>
       </div>
 
-      {/* List Monitors */}
       <div>
         {monitors.map((monitor) => (
           <div key={monitor.id}>
@@ -211,7 +203,7 @@ function Dashboard({ setToken }) {
               
               {/* === LOGIKA TAMPILAN EDIT === */}
               {editingId === monitor.id ? (
-                 // TAMPILAN FORM EDIT
+
                  <div style={{ display: 'flex', gap: '10px', width: '100%', alignItems: 'center' }}>
                     <input className="input" value={editName} onChange={e => setEditName(e.target.value)} placeholder="Name" />
                     <input className="input" value={editUrl} onChange={e => setEditUrl(e.target.value)} placeholder="URL" />
@@ -224,7 +216,7 @@ function Dashboard({ setToken }) {
                     </button>
                  </div>
               ) : (
-                // TAMPILAN NORMAL
+
                 <>
                   <div>
                     <h3 style={{ margin: '0 0 5px 0', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap:'10px' }}>
@@ -240,7 +232,7 @@ function Dashboard({ setToken }) {
                       {monitor.status || 'PENDING'}
                     </div>
                     
-                    {/* TOMBOL EDIT (BARU) */}
+
                     <button onClick={() => handleEditClick(monitor)} className="btn btn-ghost" title="Edit Monitor">
                         <FiEdit size={18} />
                     </button>

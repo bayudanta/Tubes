@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
 
 :root {
-  /* --- PALET WARNA (Deep Space) --- */
-  --bg-main: #170D21;       /* Background Paling Gelap */
-  --bg-card: #27284E;       /* Warna Dasar Kartu (Indigo) */
-  --primary: #4D274E;       /* Tombol/Aksen (Plum) */
-  --primary-hover: #633363; /* Tombol Hover */
-  --text-sub: #757179;      /* Teks Sekunder (Grey) */
-  --text-main: #DFE0EC;     /* Teks Utama/Highlight (Lavender) */
+  --bg-main: #170D21;       
+  --bg-card: #27284E;       
+  --primary: #4D274E;       
+  --primary-hover: #633363; 
+  --text-sub: #757179;      
+  --text-main: #DFE0EC;     
   
-  /* Status Colors */
+
   --status-up: #00ff9d;
   --status-down: #ff0055;
 }
@@ -22,12 +21,9 @@ body {
   padding: 0;
   min-height: 100vh;
   
-  /* --- TEKSTUR DOT MATRIX (BARU) --- */
-  /* Membuat pola titik-titik ungu sangat tipis */
   background-image: radial-gradient(rgba(77, 39, 78, 0.3) 1px, transparent 1px);
-  background-size: 30px 30px; /* Jarak antar titik */
+  background-size: 30px 30px; 
   
-  /* Gradient Utama tetap ada di belakangnya */
   background-color: var(--bg-main);
 }
 
@@ -37,7 +33,6 @@ body {
   padding: 40px 20px;
 }
 
-/* Header Gradient Text (Efek Silver Mengkilap - Tetap dipertahankan) */
 h1 {
   background: linear-gradient(to right, #DFE0EC, #a8a4b6);
   -webkit-background-clip: text;
@@ -53,7 +48,6 @@ h2, h3 {
   letter-spacing: 0.5px;
 }
 
-/* Kartu dengan nuansa Deep Indigo Glass */
 .card {
   background: rgba(39, 40, 78, 0.4); 
   backdrop-filter: blur(16px);
@@ -71,7 +65,6 @@ h2, h3 {
   box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
 }
 
-/* Input Style */
 .input {
   background: rgba(23, 13, 33, 0.6);
   border: 1px solid rgba(117, 113, 121, 0.3);
@@ -88,11 +81,9 @@ h2, h3 {
   outline: none;
   border-color: var(--primary);
   background: rgba(23, 13, 33, 0.9);
-  /* Glow halus saat mengetik */
   box-shadow: 0 0 15px rgba(77, 39, 78, 0.4);
 }
 
-/* Button Styles */
 .btn {
   padding: 12px 20px;
   border-radius: 10px;
@@ -138,7 +129,6 @@ h2, h3 {
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* Utilities */
 .flex { display: flex; align-items: center; }
 .justify-between { justify-content: space-between; }
 .gap-2 { gap: 12px; }
@@ -146,11 +136,9 @@ h2, h3 {
 .mb-4 { margin-bottom: 20px; }
 .mt-4 { margin-top: 20px; }
 
-/* Link Style */
 a { color: var(--text-sub); text-decoration: none; transition: 0.2s; }
 a:hover { color: var(--text-main); text-decoration: underline; }
 
-/* Status Badge (Pulse effect dipertahankan karena informatif) */
 @keyframes pulse-green {
     0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.4); }
     70% { box-shadow: 0 0 0 5px rgba(0, 255, 157, 0); }
@@ -169,7 +157,7 @@ a:hover { color: var(--text-main); text-decoration: underline; }
   background: rgba(0, 255, 157, 0.1);
   color: var(--status-up);
   border: 1px solid rgba(0, 255, 157, 0.2);
-  animation: pulse-green 2s infinite; /* Denyut halus */
+  animation: pulse-green 2s infinite; 
 }
 .status-down {
   background: rgba(255, 0, 85, 0.1);
@@ -177,7 +165,6 @@ a:hover { color: var(--text-main); text-decoration: underline; }
   border: 1px solid rgba(255, 0, 85, 0.2);
 }
 
-/* Custom Scrollbar (Biar rapi) */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-main); }
 ::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 4px; }

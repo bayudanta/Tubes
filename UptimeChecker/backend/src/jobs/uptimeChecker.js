@@ -15,7 +15,6 @@ const checkSites = async () => {
             let responseTime = 0;
 
             try {
-                // Cek website user (Timeout 5 detik)
                 await axios.get(monitor.url, { timeout: 5000 });
                 newStatus = 'UP';
                 responseTime = Date.now() - start; 
@@ -24,8 +23,6 @@ const checkSites = async () => {
                 console.error(`❌ ${monitor.name} is DOWN: ${error.message}`);
             }
 
-            // [LOGIKA NOTIFIKASI]
-            // Cek apakah status BERUBAH dari sebelumnya? (Misal: UP -> DOWN)
             if (monitor.status !== newStatus) {
                 console.log(`⚠️ ALERT: ${monitor.name} berubah dari ${monitor.status} menjadi ${newStatus}`);
                 
@@ -63,11 +60,10 @@ const checkSites = async () => {
     }
 };
 
-// --- TUGAS 2: BERSIHKAN LOG LAMA (DATABASE HYGIENE) ---
+// --- TUGAS 2: BERSIHKAN LOG LAMA  ---
 const cleanupLogs = async () => {
     console.log('🧹 Memulai pembersihan log otomatis...');
     try {
-        // Hapus log yang umurnya lebih dari 7 hari
         const [result] = await db.query("DELETE FROM logs WHERE checked_at < NOW() - INTERVAL 7 DAY");
         
         console.log(`✅ Logs lama berhasil dibersihkan.`);

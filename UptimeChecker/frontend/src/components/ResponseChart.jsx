@@ -26,10 +26,10 @@ const ResponseChart = ({ logs }) => {
       {
         label: 'Response Time (ms)',
         data: sortedLogs.map(log => log.response_time),
-        borderColor: '#DFE0EC',          // Garis: Lavender Mist
-        backgroundColor: 'rgba(77, 39, 78, 0.5)', // Isi: Plum Transparan
-        pointBackgroundColor: '#170D21', // Titik: Dark Void (biar bolong)
-        pointBorderColor: '#DFE0EC',     // Pinggiran titik: Lavender
+        borderColor: '#DFE0EC',          
+        backgroundColor: 'rgba(77, 39, 78, 0.5)', 
+        pointBackgroundColor: '#170D21', 
+        pointBorderColor: '#DFE0EC',     
         pointBorderWidth: 2,
         fill: true,
         tension: 0.4,
@@ -42,10 +42,10 @@ const ResponseChart = ({ logs }) => {
     responsive: true,
     plugins: {
       legend: { 
-          labels: { color: '#757179' } // Legend: Grey
+          labels: { color: '#757179' } 
       },
       tooltip: {
-          backgroundColor: '#27284E', // Tooltip: Indigo
+          backgroundColor: '#27284E', 
           titleColor: '#DFE0EC',
           bodyColor: '#DFE0EC',
           borderColor: 'rgba(117, 113, 121, 0.3)',
@@ -56,7 +56,7 @@ const ResponseChart = ({ logs }) => {
     },
     scales: {
         x: {
-            grid: { color: 'rgba(117, 113, 121, 0.1)' }, // Grid Grey Tipis
+            grid: { color: 'rgba(117, 113, 121, 0.1)' }, 
             ticks: { color: '#757179' }
         },
         y: {

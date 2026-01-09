@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-const auth = require('../middleware/auth'); // Panggil satpam token
+const auth = require('../middleware/auth'); 
 
-// 1. GET Monitors (Hanya tampilkan punya user yang login)
+// 1. GET Monitors 
 router.get('/monitors', auth, async (req, res) => {
     try {
-        const userId = req.userId; // Didapat dari token
+        const userId = req.userId; 
         const [rows] = await db.query('SELECT * FROM monitors WHERE user_id = ? ORDER BY created_at DESC', [userId]);
         res.json(rows);
     } catch (err) {
@@ -14,7 +14,7 @@ router.get('/monitors', auth, async (req, res) => {
     }
 });
 
-// 2. POST Monitor (Simpan dengan menandai siapa pemiliknya)
+// 2. POST Monitor 
 router.post('/monitors', auth, async (req, res) => {
     const { name, url } = req.body;
     const userId = req.userId;
@@ -30,7 +30,7 @@ router.post('/monitors', auth, async (req, res) => {
     }
 });
 
-// 3. DELETE Monitor (Hapus cuma boleh kalau itu punya dia)
+// 3. DELETE Monitor 
 router.delete('/monitors/:id', auth, async (req, res) => {
     const { id } = req.params;
     const userId = req.userId;
@@ -50,7 +50,7 @@ router.delete('/monitors/:id', auth, async (req, res) => {
     }
 });
 
-// 4. PUT Monitor (EDIT DATA) --- [BAGIAN BARU] ---
+// 4. PUT Monitor  
 router.put('/monitors/:id', auth, async (req, res) => {
     const { id } = req.params;
     const { name, url } = req.body;
