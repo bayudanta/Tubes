@@ -21,6 +21,7 @@ db.initDb = async () => {
         await db.query(`
             CREATE TABLE IF NOT EXISTS monitors (
                 id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT,  -- <-- INI YANG KURANG TADI
                 name VARCHAR(255) NOT NULL,
                 url VARCHAR(255) NOT NULL,
                 interval_min INT DEFAULT 1,
