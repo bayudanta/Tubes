@@ -18,7 +18,7 @@ function AuthPage({ setToken }) {
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);``
 
   const handleAuth = async (e) => {
     e.preventDefault();

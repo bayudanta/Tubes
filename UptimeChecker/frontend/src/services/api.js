@@ -5,7 +5,6 @@ const api = axios.create({
   timeout: 10000,
 });
 
-// INTERCEPTOR: Setiap request keluar, tempelkan Token dari LocalStorage
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {

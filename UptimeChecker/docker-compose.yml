@@ -15,7 +15,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
-      - JWT_SECRET=${JWT_SECRET}  # <-- Mengambil dari .env
+      - JWT_SECRET=${JWT_SECRET}  
 
   # 2. BACKEND SERVICE
   backend:
@@ -24,7 +24,7 @@ services:
     restart: always
     ports:
       - "${BACKEND_PORT}:5000"
-    # Kita bisa menghapus 'env_file' backend/.env karena sekarang semua di-inject dari root .env
+
     environment:
       - PORT=5000
       - DB_HOST=${DB_HOST}
@@ -32,7 +32,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
-      - JWT_SECRET=${JWT_SECRET}  # <-- Mengambil dari .env
+      - JWT_SECRET=${JWT_SECRET}  
 
   # 3. NOTIFICATION SERVICE
   notification-service:
@@ -42,8 +42,8 @@ services:
     ports:
       - "5002:5002"
     environment:
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN} # <-- Mengambil dari .env (Aman)
-      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}     # <-- Mengambil dari .env (Aman)
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN} 
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}     
     depends_on:
       - backend
 
